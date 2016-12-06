@@ -1,6 +1,13 @@
 package com.android.rahulrkr.www.alivedemoapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +27,12 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,6 +43,9 @@ public class MainActivity extends AppCompatActivity
     private ImageView home_fan_image;
     private SeekBar home_fan_seekbar;
     private TextView home_fan_speed;
+
+    private ImageView home_nav_header_image;
+    private TextView home_nav_header_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         home_settings = (ImageButton)findViewById(R.id.home_settings);
         home_help = (ImageButton)findViewById(R.id.home_help);
         home_bulb_image = (ImageView)findViewById(R.id.home_bulb_image);
@@ -53,6 +70,18 @@ public class MainActivity extends AppCompatActivity
         home_fan_image = (ImageView)findViewById(R.id.home_fan_image);
         home_fan_seekbar = (SeekBar)findViewById(R.id.home_fan_seekbar);
         home_fan_speed = (TextView)findViewById(R.id.home_fan_speed);
+
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        home_nav_header_image = (ImageView)headerView.findViewById(R.id.home_nav_header_img);
+        home_nav_header_name = (TextView)headerView.findViewById(R.id.home_nav_header_name);
+
+        SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String name = sharedPref.getString("user_name","");
+        String photo_url = sharedPref.getString("user_photo_url","");
+
+        home_nav_header_image.setImageBitmap(loadImageFromStorage(photo_url));
+        home_nav_header_name.setText(name);
 
         home_settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +155,24 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private Bitmap loadImageFromStorage(String path)
+    {
+        Bitmap b = null;
+        try {
+            File f=new File(path, "ProfilePic.jpg");
+            b = BitmapFactory.decodeStream(new FileInputStream(f));
+            return b;
+        }
+        catch (FileNotFoundException e)
+        {
+            // Setting default image
+            Drawable myDrawable = getResources().getDrawable(R.drawable.ic_profile_pic);
+            Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+            e.printStackTrace();
+
+            return anImage;
+        }
+    }
 
     @Override
     public void onBackPressed() {

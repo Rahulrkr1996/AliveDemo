@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "841544748760",
+    "project_id": "alive-demo-app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841544748760:android:969281f1a5e14d1a",
+        "android_client_info": {
+          "package_name": "com.android.rahulrkr.www.alivedemoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841544748760-ap2jpg4pj1elmqc7cfv8r3v4ut8mefde.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.rahulrkr.www.alivedemoapp",
+            "certificate_hash": "C48347A153600D856A2C237F9A978B08217412EF"
+          }
+        },
+        {
+          "client_id": "841544748760-649q60pmn6aifta2ej8i1upfn39u62hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjkQKSFKQIvnRggj0q82ISkq43YGz5OYs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
