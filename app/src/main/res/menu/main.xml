@@ -11,4 +11,15 @@
         android:orderInCategory="99"
         android:title="Help"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sign_out"
+        android:orderInCategory="97"
+        android:title="Log Out"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_revoke_access"
+        android:orderInCategory="98"
+        android:title="Revoke Access to this Account"
+        app:showAsAction="never" />
+
 </menu>

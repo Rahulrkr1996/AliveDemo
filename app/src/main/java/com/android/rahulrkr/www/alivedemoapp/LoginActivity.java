@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.rahulrkr.www.alivedemoapp.Constants.LoginConstants;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements
                 .build();
         // [END build_client]
 
-        login_google_sign_in = (SignInButton)findViewById(R.id.login_google_sign_in);
+        login_google_sign_in = (SignInButton) findViewById(R.id.login_google_sign_in);
         login_google_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
+
         } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
@@ -138,17 +140,17 @@ public class LoginActivity extends AppCompatActivity implements
             editor.apply();
             Toast.makeText(this, "User Details Saved", Toast.LENGTH_SHORT).show();
 
-            if (photo_url != null) {
-                // Setting default image
-                new LoadImage().execute(acct.getPhotoUrl().toString());
-            } else {
-                // Setting default image
-                Drawable myDrawable = getResources().getDrawable(R.drawable.ic_profile_pic);
-                Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
-                saveInGallery(anImage);
-            }
+//            if (photo_url != null) {
+//                // Setting default image
+//              //  new LoadImage().execute(acct.getPhotoUrl().toString());
+//            } else {
+//                // Setting default image
+//                Drawable myDrawable = getResources().getDrawable(R.drawable.ic_profile_pic);
+//                Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+//                saveInGallery(anImage);
+//            }
 
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         } else {
@@ -164,34 +166,6 @@ public class LoginActivity extends AppCompatActivity implements
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signIn]
-
-    // [START signOut]
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-    // [END signOut]
-
-    // [START revokeAccess]
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-    // [END revokeAccess]
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -216,67 +190,67 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    public void saveInGallery(Bitmap img) {
-        File myDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + getApplicationContext().getPackageName()
-                + "/Files");
-
-//        if(!myDir.exists()){
-//            if (! myDir.mkdirs()){
-//                return null;
+//    public void saveInGallery(Bitmap img) {
+//        File myDir = new File(Environment.getExternalStorageDirectory()
+//                + "/Android/data/"
+//                + getApplicationContext().getPackageName()
+//                + "/Files");
+//
+////        if(!myDir.exists()){
+////            if (! myDir.mkdirs()){
+////                return null;
+////            }
+////        }
+//
+//
+//        String fname = "ProfilePic" + ".jpg";
+//        File file = new File(myDir, fname);
+//
+//        /////////////////////////////////////
+//
+//        if (file.exists())
+//            file.delete();
+//        try {
+//            FileOutputStream out = new FileOutputStream(file);
+//            img.compress(Bitmap.CompressFormat.JPEG, 90, out);
+//            out.flush();
+//            out.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private class LoadImage extends AsyncTask<String, String, Bitmap> {
+//        ProgressDialog pDialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            pDialog = new ProgressDialog(LoginActivity.this);
+//            pDialog.setMessage("Saving Profile Picture ....");
+//            pDialog.show();
+//
+//        }
+//
+//        protected Bitmap doInBackground(String... args) {
+//            try {
+//                profilePicture = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return profilePicture;
+//        }
+//
+//        protected void onPostExecute(Bitmap image) {
+//
+//            if (image != null) {
+//                saveInGallery(image);
+//                pDialog.dismiss();
+//            } else {
+//                pDialog.dismiss();
+//                Toast.makeText(LoginActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
 //            }
 //        }
-
-
-        String fname = "ProfilePic" + ".jpg";
-        File file = new File(myDir, fname);
-
-        /////////////////////////////////////
-
-        if (file.exists())
-            file.delete();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            img.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private class LoadImage extends AsyncTask<String, String, Bitmap> {
-        ProgressDialog pDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Saving Profile Picture ....");
-            pDialog.show();
-
-        }
-
-        protected Bitmap doInBackground(String... args) {
-            try {
-                profilePicture = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return profilePicture;
-        }
-
-        protected void onPostExecute(Bitmap image) {
-
-            if (image != null) {
-                saveInGallery(image);
-                pDialog.dismiss();
-            } else {
-                pDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    }
 }
