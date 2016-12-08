@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class LoginActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
     private SignInButton login_google_sign_in;
+
+    private TextView login_signUp,login_login;
 
     private String name, email;
     private Uri photo_url;
@@ -77,6 +80,25 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+
+        login_signUp = (TextView) findViewById(R.id.login_signUp);
+        login_login = (TextView) findViewById(R.id.login_login);
+
+        login_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this,SignUp.class);
+                startActivity(i);
+            }
+        });
+
+        login_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this,Login.class);
+                startActivity(i);
             }
         });
     }
