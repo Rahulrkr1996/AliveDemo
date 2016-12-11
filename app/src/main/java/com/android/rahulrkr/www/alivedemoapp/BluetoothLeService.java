@@ -54,15 +54,9 @@ public class BluetoothLeService extends Service {
         @Override
         public void onServiceConnected(ComponentName componentName,
                                        IBinder service) {
-
-
             if (!initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
             }
-            // Automatically connects to the device upon successful start-up
-            // initialization.
-            //Toast.makeText(getApplicationContext(), "service connected", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(getApplicationContext(),"Trying to connect after service reinit!!",Toast.LENGTH_SHORT).show();
 
             SharedPreferences ble_mac_add = getSharedPreferences("BLEMACAdd", Context.MODE_PRIVATE);
             ble_mac = ble_mac_add.getString("blemacadd","");

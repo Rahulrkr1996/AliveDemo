@@ -1,5 +1,6 @@
 package com.android.rahulrkr.www.alivedemoapp;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity
     private TextView home_nav_header_name;
     private GoogleApiClient mGoogleApiClient;
 
-    @Override
+    private BroadcastReceiver mGattUpdateReceiver;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -162,6 +164,42 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+//        /** ToDo */
+//        mGattUpdateReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                final String action = intent.getAction();
+//                if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+//                    mConnected = true;
+//                    connecting = false;
+//                    Toast.makeText(getApplicationContext(), "Welcome Home!", Toast.LENGTH_SHORT).show();
+//                    user_layer_interface();
+//                    if (layer == 4) layer = 5;
+//                } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED
+//                        .equals(action)) {
+//                    if (track == 0) {
+//                        start();
+//                    }
+//                    mConnected = false;
+//                    connecting = false;
+//                    Toast.makeText(getApplicationContext(), "See you soon!", Toast.LENGTH_SHORT).show();
+//                    if (new String("").equals(username_init) && layer == 5) {//startup_page();
+//                        signuplogincombo_page();
+//                    } else {
+//                        if (layer == 5) layer = 4;
+//                    }
+//                } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED
+//                        .equals(action)) {
+//                    // set serial chaacteristics
+//                    setupSerial();
+//                } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+//                    final byte[] rxBytes = characteristicRX.getValue();
+//                    String btData = new String(rxBytes);
+//                    peer_data_process(btData);
+//                }
+//            }
+//        };
+///////////////////////////////////////////////////
     }
 
     @Override
@@ -174,6 +212,8 @@ public class MainActivity extends AppCompatActivity
                 .build();
         mGoogleApiClient.connect();
         super.onStart();
+
+
     }
 
     @Override
@@ -210,7 +250,6 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {
